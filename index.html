@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="lo">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LaoSub Quick-Select - ເວັບເບິ່ງໜັງຟຣີ</title>
+    <style>
+        body {
+            font-family: 'Noto Sans Lao', sans-serif;
+            background-color: #141414;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #000000;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 3px solid #ff0000;
+        }
+        header h1 {
+            margin: 0;
+            color: #ff0000;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+        .main-player {
+            background: #000;
+            margin-bottom: 30px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        }
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* ອັດຕາສ່ວນ 16:9 */
+            height: 0;
+            background-color: #000;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+        .sub-selector {
+            background-color: #1f1f1f;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            border-top: 1px solid #333;
+        }
+        .sub-btn {
+            background-color: #333;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 14px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: 'Noto Sans Lao', sans-serif;
+            transition: background 0.2s;
+        }
+        .sub-btn:hover {
+            background-color: #555;
+        }
+        .sub-btn.active {
+            background-color: #ff0000;
+            font-weight: bold;
+        }
+        .movie-info {
+            padding: 15px;
+            background-color: #1f1f1f;
+        }
+        .movie-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .movie-card {
+            background-color: #2f2f2f;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .movie-card:hover {
+            transform: scale(1.05);
+        }
+        .movie-card img {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+        }
+        .movie-title {
+            padding: 10px;
+            font-size: 16px;
+            text-align: center;
+            font-weight: bold;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #000;
+            margin-top: 40px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>LAOSUB FREE</h1>
+        <p>ກົດປ່ຽນພາສາຊັບໄດ້ທັນທີ ບໍ່ຕ້ອງໃຊ້ໄຟລ໌ເສີມ</p>
+    </header>
+
+    <div class="container">
+        <!-- ຕົວຫຼິ້ນວິດີໂອ ແລະ ປຸ່ມເລືອກຊັບ -->
+        <div class="main-player">
+            <div class="video-container">
+                <!-- ຕົວຫຼິ້ນຫຼັກທີ່ຈະດຶງ Link ມາສະແດງ -->
+                <iframe id="videoPlayer" src="https://youtube.com" allowfullscreen></iframe>
+            </div>
+            
+            <!-- ປຸ່ມເລືອກປ່ຽນຊັບ -->
+            <div class="sub-selector">
+                <span>ເລືອກຄຳບັນຍາຍ:</span>
+                <button id="btnLao" class="sub-btn active" onclick="switchSub('lao')">🇱🇦 ຊັບລາວ</button>
+                <button id="btnThai" class="sub-btn" onclick="switchSub('thai')">🇹🇭 ຊັບໄທ</button>
+                <button id="btnEng" class="sub-btn" onclick="switchSub('eng')">🇬🇧 ຊັບອັງກິດ</button>
+            </div>
+
+            <div class="movie-info">
+                <h2 id="currentTitle">ກຳລັງສາຍ: ເລື່ອງຕົວຢ່າງ 1</h2>
+            </div>
+        </div>
+
+        <h3>ລາຍການໜັງທັງໝົດ</h3>
+        <div class="movie-grid">
+            
+            <!-- ໜັງເລື່ອງທີ 1 -->
+            <div class="movie-card" onclick="changeMovie(
+                'ເລື່ອງຕົວຢ່າງ 1',
+                'https://youtube.com', /* Link ຊັບລາວ */
+                'https://youtube.com', /* Link ຊັບໄທ */
+                'https://youtube.com'  /* Link ຊັບອັງກິດ */
+            )">
+                <img src="https://unsplash.com" alt="Movie 1">
+                <div class="movie-title">ເລື່ອງຕົວຢ່າງ 1</div>
+            </div>
+
+            <!-- ໜັງເລື່ອງທີ 2 -->
+            <div class="movie-card" onclick="changeMovie(
+                'ເລື່ອງຕົວຢ່າງ 2 (ໜັງສັ້ນ)',
+                'https://youtube.com', /* Link ຊັບລາວ */
+                'https://youtube.com', /* Link ຊັບໄທ */
+                'https://youtube.com'  /* Link ຊັບອັງກິດ */
+            )">
+                <img src="https://unsplash.com" alt="Movie 2">
+                <div class="movie-title">ເລື່ອງຕົວຢ່າງ 2</div>
+            </div>
+
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 LaoSub Free Player. ພັດທະນາເພື່ອຄວາມບັນເທີງຟຣີ.</p>
+    </footer>
+
+    <script>
+        // ເກັບຂໍ້ມູນ Link ຂອງໜັງທີ່ກຳລັງເປີດຢູ່
+        let currentLinks = {
+            lao: "https://youtube.com",
+            thai: "https://youtube.com",
+            eng: "https://youtube.com"
+        };
+
+        // ຟັງຊັນເວລາຄລິກເລືອກໜັງຈາກ Grid
+        function changeMovie(title, laoLink, thaiLink, engLink) {
+            currentLinks.lao = laoLink;
+            currentLinks.thai = thaiLink;
+            currentLinks.eng = engLink;
+            
+            document.getElementById('currentTitle').innerText = "ກຳລັງສາຍ: " + title;
+            
+            // ໃຫ້ມັນເລີ່ມເປີດດ້ວຍຊັບລາວເປັນຫຼັກກ່ອນ
+            switchSub('lao');
+            
+            // ເລື່ອນໜ້າຈໍຂຶ້ນເທິງສຸດ
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+
+        // ຟັງຊັນປ່ຽນ Link ວິດີໂອຕາມພາສາທີ່ກົດເລືອກ
+        function switchSub(lang) {
+            // ປ່ຽນ Link ໃນ iframe
+            document.getElementById('videoPlayer').src = currentLinks[lang];
+            
+            // ປ່ຽນສະຕາຍປຸ່ມໃຫ້ຮູ້ວ່າກົດປຸ່ມໃດຢູ່
+            document.getElementById('btnLao').classList.remove('active');
+            document.getElementById('btnThai').classList.remove('active');
+            document.getElementById('btnEng').classList.remove('active');
+            
+            if(lang === 'lao') document.getElementById('btnLao').classList.add('active');
+            if(lang === 'thai') document.getElementById('btnThai').classList.add('active');
+            if(lang === 'eng') document.getElementById('btnEng').classList.add('active');
+        }
+    </script>
+
+</body>
+</html>
